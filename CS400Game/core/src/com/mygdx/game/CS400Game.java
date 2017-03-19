@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import Screens.Menu;
+import Screens.PointAndClick;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -19,7 +20,7 @@ public class CS400Game extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-                setScreen(new Menu(this));
+                setScreen(new PointAndClick(this));
 		//img = new Texture("badlogic.jpg");
 	}
 
