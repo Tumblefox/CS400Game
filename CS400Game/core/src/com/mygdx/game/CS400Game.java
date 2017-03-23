@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import Screens.Demo;
 import Screens.Menu;
 import Screens.PointAndClick;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -13,13 +14,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class CS400Game extends Game {
 	public SpriteBatch batch;
 	public static AssetManager manager;
-        public static final int height = 800;
-        public static final int width = 800;
+        public static final int V_HEIGHT = 950;
+        public static final int V_WIDTH = 800;
         public static final float PPM = 100;//PPM = Pixels Per Meter
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+                //setScreen(new Demo(this));
                 setScreen(new PointAndClick(this));
 		//img = new Texture("badlogic.jpg");
 	}

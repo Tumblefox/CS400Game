@@ -33,7 +33,7 @@ public class Menu implements Screen {
         texture = new Texture("badlogic.jpg"); //This is the test image
         cam = new OrthographicCamera();
         //viewport = new ScreenViewport(cam); Resizes to fit display size
-        viewport = new FitViewport(game.width, game.height, cam);
+        viewport = new FitViewport(game.V_WIDTH, game.V_HEIGHT, cam);
         
         
     }

@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
  *
  * @author asieka01
  */
-public abstract class InGameObject {
+public class InGameObject {
     private World world;
     //private TiledMap map;
     private Rectangle bounds;
