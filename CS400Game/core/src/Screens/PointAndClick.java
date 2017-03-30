@@ -5,6 +5,7 @@
  */
 package Screens;
 
+import Objects.InGameObject;
 import Tools.WorldBuilder;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
@@ -32,6 +33,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.CS400Game;
+import java.util.Iterator;
 
 /**
  *
@@ -39,13 +41,18 @@ import com.mygdx.game.CS400Game;
  */
 public class PointAndClick implements Screen {    
     private CS400Game game;
-    private TextureAtlas atlas;
+    //private TextureAtlas atlas;
     private OrthographicCamera cam;
     private Viewport viewport;
     
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    private float[] stages;
+    private int restrictionPoint; //point of initially inaccessible stages; always at the end of array
+    private int numOfStages;
+    private int currentStage;
+    private Array<InGameObject> gameObjects;
     
     private World world;
     private WorldBuilder worldBuilder;
@@ -53,11 +60,14 @@ public class PointAndClick implements Screen {
     
     private Music music;
     
+    private boolean update = true;
+    
     //private Inventory inventory; must create class
     //private Array<Item> items; must create class
 
     BitmapFont font;
     String currentMessage;
+    float textPos;
     
     ShapeRenderer messageBox;
     
@@ -66,32 +76,79 @@ public class PointAndClick implements Screen {
         
         messageBox = new ShapeRenderer();
 
-        
         font = new BitmapFont();
         font.setUseIntegerPositions(false);
         font.setColor(Color.WHITE);
         currentMessage = "";
         
         cam = new OrthographicCamera();
-        viewport = new FitViewport(800, 800, cam);
-        viewport.apply();
-        cam.position.set(400, 400, 0);
-        //viewport = new FitViewport(game.V_WIDTH, game.V_HEIGHT, cam);
+
+        viewport = new FitViewport(game.V_WIDTH, game.V_HEIGHT, cam);
+        cam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
+        //cam.position.set(2800, viewport.getWorldHeight() / 2, 0);
+        
+        //Map Debug
+        /*currentMessage = "Position: " + cam.position.x;
+        textPos = 0;*/
         
         world = new World(new Vector2(0,0), true);
         
         maploader = new TmxMapLoader();
         map = maploader.load("PNC1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-        renderer.setView(cam);
+        
+        numOfStages = ((map.getProperties().get("tilewidth", Integer.class)) * 2) / game.V_WIDTH;
+        stages = new float[numOfStages];
+        stages[0] = game.V_WIDTH / 2; //First stage's cam position is at game.V_WIDTH / 2 (400px)
+        currentStage = 0;
+        
+        restrictionPoint = 4;
+        
+        for (int i =  1; i < numOfStages; i++) {
+            stages[i] = stages[i-1] + game.V_WIDTH;
+        }
+
+       int objectCount = 0;
+       for (int i = 0; i <  map.getLayers().getCount(); i++) {
+           objectCount += map.getLayers().get(i).getObjects().getCount();
+       }
+       
+       String objName = "";
+       String layer = "";
+       gameObjects = new Array(objectCount);
+       for (int j = 0; j < map.getLayers().getCount(); j++) {
+           for (int i = 0; i < map.getLayers().get(j).getObjects().getCount(); i++) {
+               if (map.getLayers().get(j).getObjects().getCount() != 0) {
+                   objName = map.getLayers().get(j).getObjects().get(i).getName();
+                   layer = map.getLayers().get(j).getName();
+                   gameObjects.add(new InGameObject(this, objName, layer));
+                   //currentMessage += "Name: " + objName +"\n"; DEBUG
+               }
+           }
+       }
+       /*for (int i = 0; i < stages.length; i++) {
+           currentMessage += "Stage " + i + ": " + stages[i] + "\n";
+       }*/
+       //currentMessage += renderer.getViewBounds().width;
+       //currentMessage += map.getLayers().get(1).getObjects().get(1).getProperties().get("type", String.class); DEBUG
+       //currentMessage += numOfStages; DEBUG
+       /*String dis = ""; DEBUG
+       for (Iterator<String> iter = map.getLayers().get(1).getObjects().get(0).getProperties().getKeys(); iter.hasNext();) {
+           dis += iter.next() + "\n";        
+       }
+       currentMessage = dis;*/
+       
         /*atlas = ;
         physicDebug = ;
         music = ;*/
     }
     
     //public Atlas getAtlas() {}
-    //public Map getMap() {}
     //public World getWorld() {}
+    
+    public TiledMap getMap() {
+        return map;
+    }
     
     public void nextBG(boolean leftKey) {
         
@@ -106,21 +163,42 @@ public class PointAndClick implements Screen {
     public void handleInput(float deltaTime) {
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            nextBG(true);
-            currentMessage = "";
+            if (currentStage != (restrictionPoint - 1)) {
+                currentStage++;
+                cam.position.x = stages[currentStage];
+                textPos += game.V_WIDTH;
+            }
+            else {
+                cam.position.x = stages[0];
+                currentStage = 0;
+                textPos = 0;
+            }
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            nextBG(false);
-            currentMessage = "";
+            if (currentStage != (0)) {
+                currentStage --;
+                cam.position.x = stages[currentStage];
+                textPos -= game.V_WIDTH;
+            }
+            else {
+                cam.position.x = stages[restrictionPoint - 1];
+                currentStage = restrictionPoint - 1;
+                textPos = restrictionPoint - 1;
+            }
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+            if (!update) {
+                update = true;
+            } else {
+            update = false;
+            }
             
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            currentMessage = "Cryro Test Subject," + "\n"
+            currentMessage = "Cryo Test Subject," + "\n"
                     + "Point blank, if your reading this, I'm already dead."
                     + "Perhaps you can tell from whatever state of decomposition I'm currently in. "
                     + "I wrote this because I have a bit of an off-beat sense of humor, but also to help you out. If I'm dead, chances are, you'll go next. "
@@ -135,7 +213,12 @@ public class PointAndClick implements Screen {
     
     public void update(float deltaTime) {
         handleInput(deltaTime);
+        renderer.setView(cam);
+        if (update) {
         cam.update();
+        }
+        //currentMessage = "Position: " + cam.position.x;
+        //renderer.setView(cam);
     }
     
     @Override
@@ -144,28 +227,31 @@ public class PointAndClick implements Screen {
     }
 
     @Override
-    public void render(float f) {
-        update(f);
+    public void render(float deltaTime) {
+        update(deltaTime);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        renderer.render();
+        //currentMessage = "" + renderer.getViewBounds().x; DEBUG
+        
         game.batch.setProjectionMatrix(cam.combined);     
         
         game.batch.begin();
         //everything rendered to screen goes here
-        renderer.render();
-        //font.draw(game.batch, currentMessage, 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 10, true);
-        font.draw(game.batch, currentMessage, 0, 75, 400, 10, true);
+        font.draw(game.batch, currentMessage, textPos, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 10, true);
+        //font.draw(game.batch, currentMessage, 0, 75, 400, 10, true);
         game.batch.end();
         
-        messageBox.begin(ShapeType.Line);
+        /*messageBox.begin(ShapeType.Line);
         messageBox.rect(0, 0, 400, 150);
         messageBox.setColor(Color.BLUE);
-        messageBox.end();
+        messageBox.end();*/
     }
 
     @Override
-    public void resize(int i, int i1) {
-        //viewport.update(i, i1);
+    public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 
     @Override
@@ -185,7 +271,7 @@ public class PointAndClick implements Screen {
 
     @Override
     public void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        map.dispose();
     }
     
 }

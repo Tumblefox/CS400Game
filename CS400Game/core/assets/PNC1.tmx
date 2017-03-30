@@ -1,122 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="1" height="1" tilewidth="4519" tileheight="903" nextobjectid="35">
- <tileset firstgid="1" name="Images" tilewidth="4519" tileheight="903" tilecount="1" columns="0">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2" height="2" tilewidth="2000" tileheight="400" nextobjectid="30">
+ <tileset firstgid="1" name="images" tilewidth="4000" tileheight="800" tilecount="1" columns="0">
   <tile id="0">
-   <image width="4519" height="903" source="PNC1.png"/>
+   <image width="4000" height="800" source="PNC1.png"/>
   </tile>
  </tileset>
- <layer name="BG" width="1" height="1">
+ <layer name="bg" width="2" height="2">
   <data encoding="base64">
-   AQAAAA==
+   AAAAAAAAAAABAAAAAAAAAA==
   </data>
  </layer>
- <objectgroup name="lights" offsetx="1.5" offsety="-2.5">
-  <object id="8" x="4.66667" y="216.667" width="38.6667" height="64">
+ <objectgroup name="lights" offsetx="2.66667" offsety="0.666667">
+  <object id="3" name="L1" type="polyline" x="2" y="141.667">
+   <properties>
+    <property name="interaction" value="Warning light."/>
+    <property name="message" value="These lights are getting on my nerves."/>
+   </properties>
+   <polyline points="0,0 11,-1.66667 23.6667,7.33333 30.3333,34.3333 21,56.6667 3.33333,62 -0.666667,59.6667 -0.666667,-0.333333"/>
+  </object>
+  <object id="4" name="L2" type="ellipse" x="562.333" y="134.667" width="48.6667" height="63.6667">
+   <properties>
+    <property name="interaction" value="Warning light."/>
+    <property name="message" value="These lights are getting on my nerves."/>
+   </properties>
    <ellipse/>
   </object>
-  <object id="9" x="583.5" y="212.5" width="42.5" height="63">
+  <object id="5" name="L3" type="ellipse" x="1056.33" y="107.667" width="42.6667" height="60">
+   <properties>
+    <property name="interaction" value="Warning light."/>
+    <property name="message" value="These lights are getting on my nerves."/>
+   </properties>
    <ellipse/>
   </object>
-  <object id="10" x="1106" y="156.667" width="46" height="61.3333">
+  <object id="9" name="L4" type="ellipse" x="2280.83" y="69.8333" width="62.5" height="63.5">
+   <properties>
+    <property name="interaction" value="Warning light."/>
+    <property name="message" value="These lights are getting on my nerves."/>
+   </properties>
    <ellipse/>
   </object>
-  <object id="11" x="2360" y="142" width="56.5" height="60.5">
+  <object id="10" name="L5" type="ellipse" x="2471.83" y="117.833" width="38" height="66">
+   <properties>
+    <property name="interaction" value="Warning light."/>
+    <property name="message" value="These lights are getting on my nerves."/>
+   </properties>
    <ellipse/>
   </object>
-  <object id="12" x="2745.5" y="180" width="37.25" height="62.5">
-   <ellipse/>
-  </object>
-  <object id="13" x="4379.5" y="77.5" width="67.5" height="62.5">
+  <object id="11" name="L6" type="ellipse" x="3879.33" y="70.8333" width="65" height="63">
+   <properties>
+    <property name="interaction" value="These lights are getting on my nerves."/>
+    <property name="message" value="These lights are getting on my nerves."/>
+   </properties>
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="objects" offsetx="4" offsety="0">
-  <properties>
-   <property name="message">I remember being put put in this chamber for good. What happened?
-</property>
-  </properties>
-  <object id="15" name="chamber" x="190.667" y="412">
-   <polyline points="0,0 -35.3333,-62 -52.6667,-134 -48.6667,-226 -36.6667,-259.333 -39.3333,-269.333 0.666667,-268 -8.66667,-236 -23.3333,-162 -17.3333,-111.333 -2.66667,-57.3333 32.6667,-5.33333 91.3333,-6.66667 166,9.33333 208.667,30.6667 205.333,467.333 -73.3333,468 -72.6667,26 0.666667,0.666667 1.33333,0"/>
-  </object>
-  <object id="16" name="sink" x="1392" y="645.333">
+ <objectgroup name="objects">
+  <object id="12" name="chamber" type="polyline" x="136" y="66">
    <properties>
-    <property name="message" value="An eyewashing sink...right next to the trash bin. How sanitary."/>
+    <property name="interaction" value=""/>
+    <property name="message" value="I remember being frozen for good. What happen?"/>
    </properties>
-   <polyline points="0,0 27.3333,4 71.3333,2.66667 88,-41.3333 166,-56 188,-75.3333 189.333,-127.333 142,-136.667 134,-170 132.667,-178.667 108.667,-164 108,-159.333 118.667,-154.667 124,-142.667 -48.6667,-137.333 -48,-150 -36,-159.333 -44.6667,-172 -60.6667,-177.333 -61.3333,-170 -70,-146 -70,-133.333 -88.6667,-126 -86.6667,-88.6667 -79.3333,-64.6667 -42,-50.6667 -13.3333,-45.3333 -0.666667,-1.33333"/>
+   <polyline points="0,0 40,2 21,111 32,193 72,263 176,268 249,298 243,730 -33,729 -33,292 40,270 -10,156 -9,46 1,-3"/>
   </object>
-  <object id="17" name="pipe" x="1473.33" y="630.667" width="62.6667" height="17.3333">
+  <object id="14" name="grinder" type="polyline" x="819.091" y="437.273">
    <properties>
-    <property name="interaction" value="Isn't iron oxide rust? Let me scrape some off of this pipe."/>
-    <property name="message" value="A rusty pipe. How long have I been down here?"/>
-   </properties>
-  </object>
-  <object id="18" name="trashbin" x="1198.5" y="855">
-   <properties>
-    <property name="interaction" value="There's some aluminum foil in here, I could use that."/>
-    <property name="message" value="A trash bin. Probably nothing special."/>
-   </properties>
-   <polyline points="0,0 -4,-89 9.5,-92.5 21,-97.5 28.5,-94 79.5,-94 92.5,-95.5 95.5,-92 121,-87.5 119.5,-1 0,0.5"/>
-  </object>
-  <object id="20" name="Digital" x="1019.25" y="509.75">
-   <properties>
-    <property name="message" value="A scale, obviously for weighing coffee."/>
-   </properties>
-   <polyline points="0,0 -0.25,8.5 10.5,17.75 14.25,18.75 13.25,24 35.25,29 60,28.75 78.5,23 81.75,19.75 74.5,14.25 72,10.25 55.75,7 35.5,7.25 17.75,9.25 14.75,12.25 18.25,15.75 16.25,16 5,9.75 3,1.5 3.5,0 -0.25,-0.75"/>
-  </object>
-  <object id="21" name="mugs" x="947" y="549.333">
-   <properties>
-    <property name="interaction" value="I'll use these to mix the thermite."/>
-    <property name="message" value="Two mugs and no coffee."/>
-   </properties>
-   <polyline points="0,0 19,-0.666667 20,-17.6667 24.6667,-18.3333 25.6667,-23.3333 31.3333,-23.6667 30,-33.3333 24.3333,-33.6667 24.3333,-39.6667 4.66667,-39.3333 5,-27.3333 5,-24 -0.333333,-21.6667 0,-16 -5,-15.3333 -6.33333,-8.33333 0.666667,-7.33333 -0.333333,-2 -0.666667,-1.33333"/>
-  </object>
-  <object id="23" name="grinder" x="900" y="533">
-   <properties>
+    <property name="interaction" value=""/>
     <property name="message" value="A coffee grinder."/>
    </properties>
-   <polyline points="0,0 13.3333,1.66667 26.6667,-0.666667 26.6667,-55.6667 -3.66667,-55 -30.3333,-68.3333 -36.6667,-56 -33,-46 -21.6667,-40.3333 -9.66667,-41.3333 -3.66667,-51.6667 0.333333,-0.333333"/>
+   <polyline points="0,0 12.7273,13.4545 28.5455,12.7273 34.1818,2.72727 35.8182,52.7273 51.6364,55.8182 66,52.7273 64.5455,-1.27273 33.2727,-2.18182 8.18182,-13.0909 0,0"/>
   </object>
-  <object id="24" name="armedLock" x="1708.67" y="362.667" width="121.333" height="149.333">
+  <object id="15" name="mugs" type="polyline" x="902.909" y="505.273">
    <properties>
-    <property name="message" value="The lock has been seized by the emergency system. I'll need to turn it off to leave."/>
+    <property name="interaction" value=""/>
+    <property name="message" value="Two mugs...and no coffee."/>
+   </properties>
+   <polyline points="0,0 1.09091,2.72727 22.5455,2.54545 21.4545,-15.2727 25.2727,-14.5455 26.3636,-21.8182 32.3636,-21.4545 30.1818,-31.8182 25.2727,-32.3636 23.6364,-39.4545 5.09091,-38.5455 4.90909,-21.8182 0.363636,-19.0909 0.181818,-15.0909 -6.72727,-12.3636 -4.90909,-3.63636 0.363636,-4.18182 0,-0.181818"/>
+  </object>
+  <object id="16" name="scale" type="polyline" x="975.455" y="467.818">
+   <properties>
+    <property name="interaction" value=""/>
+    <property name="message" value="A digital scale...obviously for measuring coffee."/>
+   </properties>
+   <polyline points="0,0 5.09091,-0.363636 4.54545,6.90909 15.4545,14.9091 20.7273,8.54545 70.9091,9.81818 82.3636,19.6364 47.8182,29.0909 12.3636,24.7273 14.9091,18.7273 0.181818,8.54545 0,-0.727273"/>
+  </object>
+  <object id="17" name="trashbin" type="polyline" x="1155" y="797">
+   <properties>
+    <property name="interaction" value="There seems to be some aluminum foil in here."/>
+    <property name="message" value="A trashbin. Probably nothing special."/>
+   </properties>
+   <polyline points="0,0 119.333,0.333333 120,-74 82.3333,-80 28.3333,-78.3333 14.6667,-80 -5.33333,-69.3333 -0.333333,-0.333333"/>
+  </object>
+  <object id="18" name="sink" type="polyline" x="1258.5" y="480.5">
+   <properties>
+    <property name="interaction" value=""/>
+    <property name="message" value="An eyewashing sink."/>
+   </properties>
+   <polyline points="0,0 11.5,58 77,78.5 93,125 164,123.5 179,79.5 273,60.5 282.5,0.5 233.5,-14.5 222,-55.5 196.5,-37.5 208.5,-31 213.5,-17 39,-14.5 48.5,-32.5 55.5,-37.5 31,-55 22.5,-29 22,-11.5 -0.5,0"/>
+  </object>
+  <object id="19" name="pipe" type="rectangle" x="1429" y="589" width="63" height="15.5">
+   <properties>
+    <property name="interaction" value="Isn't iron oxide the chemical name for rust?"/>
+    <property name="message" value="A rusty pipe."/>
    </properties>
   </object>
-  <object id="25" name="armedDoor" x="1866" y="92" width="380" height="794">
+  <object id="20" name="armedLock" type="rectangle" x="1636" y="293.333" width="120" height="149.333">
    <properties>
-    <property name="message" value="The door has been clamped by the emergency system."/>
+    <property name="interaction" value=""/>
+    <property name="message" value="The lock has been seized by the emergency system."/>
    </properties>
   </object>
-  <object id="26" name="scientist" x="2810" y="889">
+  <object id="21" name="armedDoor" type="rectangle" x="1801.33" y="29.3333" width="366.667" height="768">
    <properties>
-    <property name="message" value="Dead scientist. There is a note and some magnesium strips in the coat pocket."/>
-   </properties>
-   <polyline points="0,0 -79,2 -93,-2 -55,-12 -50,-26 -49,-54 -34,-80 -43,-86 -38,-142 -69,-163 -83,-170 -20,-238 -17,-369 32,-385 52,-418 91,-421 110,-377 128,-351 125,-186 98,-160 96,-112 57,-105 59,-49 116,-25 170,5 0,0"/>
-  </object>
-  <object id="27" name="computer" x="3343.33" y="566">
-   <properties>
-    <property name="interaction" value="Finally, I shut that emergency system off."/>
-    <property name="message" value="The computer is locked. I need the password."/>
-   </properties>
-   <polyline points="0,0 28.6667,7.33333 61.3333,2.66667 46.6667,-10 48,-65.3333 168.667,-50.6667 170.667,-215.333 -91.3333,-223.333 -90,-79.3333 6,-68.6667 -0.666667,-1.33333"/>
-  </object>
-  <object id="28" name="drawer" x="3078" y="582.667" width="114" height="64">
-   <properties>
-    <property name="message" value="There is a key in here. I might be able to use it for the door."/>
+    <property name="interaction" value=""/>
+    <property name="message" value="The door out has been clamped shut by the emergency system."/>
    </properties>
   </object>
-  <object id="29" name="underdesk" x="3278" y="644" width="178" height="234.667">
+  <object id="23" name="scientist" type="polyline" x="2488" y="796">
    <properties>
-    <property name="message" value="There is text carved underneath the desk that says 'HOWDAREYOUASSUMEMYGENDER.' Maybe its the password."/>
+    <property name="interaction" value="A dead scientist. Smells like cherries."/>
+    <property name="message" value="A long dead scientist. There is a note a few magnesium strips in his pocket."/>
+   </properties>
+   <polyline points="0,0 106.667,0 110.667,-28 109.333,-77.3333 158.667,-73.3333 149.333,-136 169.333,-204 154.667,-268 126.667,-296 160,-349.333 157.333,-380 116,-394.667 86.6667,-361.333 93.3333,-324 57.3333,-284 44,-241.333 -29.3333,-137.333 2.66667,-118.667 0,0.125"/>
+  </object>
+  <object id="24" name="drawer" type="rectangle" x="2811" y="524" width="112" height="64">
+   <properties>
+    <property name="interaction" value="It's empty."/>
+    <property name="message" value="There is a key in the drawer."/>
    </properties>
   </object>
-  <object id="30" name="lock" x="3690" y="310" width="128.667" height="159.333">
+  <object id="26" name="underdesk" type="rectangle" x="3009" y="579" width="179" height="219">
    <properties>
-    <property name="interaction" value="The tip of the key broke inside the lock. I can't get it back out."/>
-    <property name="message" value="I need a key for this lock."/>
+    <property name="interaction" value=""/>
+    <property name="message" value="Under the desk, there is a carving that says &quot;HOWDAREYOUASSUMEMYGENDER&quot;."/>
    </properties>
   </object>
-  <object id="31" name="door" x="3866" y="30" width="394" height="840">
+  <object id="27" name="computer" type="polyline" x="3074" y="504">
    <properties>
+    <property name="interaction" value="Finally, I shut the emergency system off."/>
+    <property name="message" value="The computer is locked by a password."/>
+   </properties>
+   <polyline points="0,0 25,9 64,8 48,-30 52,-63 121,-55 123,-213 -93,-218 -93,-78 6,-67 9,-6.75 0,0"/>
+  </object>
+  <object id="28" name="lock" type="rectangle" x="3236" y="294" width="120.667" height="148">
+   <properties>
+    <property name="interaction" value="The tip of the broke inside the lock."/>
+    <property name="message" value="The lock needs a key. What else is new?"/>
+   </properties>
+  </object>
+  <object id="29" name="door" type="rectangle" x="3398" y="28" width="370" height="769">
+   <properties>
+    <property name="interaction" value=""/>
     <property name="message" value="The door is sealed shut."/>
    </properties>
   </object>
