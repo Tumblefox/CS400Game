@@ -25,6 +25,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -60,8 +62,6 @@ public class PointAndClick implements Screen {
     
     private Music music;
     
-    private boolean update = true;
-    
     //private Inventory inventory; must create class
     //private Array<Item> items; must create class
 
@@ -70,6 +70,7 @@ public class PointAndClick implements Screen {
     float textPos;
     
     ShapeRenderer messageBox;
+    InGameObject test;
     
     public PointAndClick(CS400Game game) {
         this.game = game;
@@ -85,7 +86,7 @@ public class PointAndClick implements Screen {
 
         viewport = new FitViewport(game.V_WIDTH, game.V_HEIGHT, cam);
         cam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
-        //cam.position.set(2800, viewport.getWorldHeight() / 2, 0);
+        //cam.position.set(2399, viewport.getWorldHeight() / 2, 0);
         
         //Map Debug
         /*currentMessage = "Position: " + cam.position.x;
@@ -95,14 +96,17 @@ public class PointAndClick implements Screen {
         
         maploader = new TmxMapLoader();
         map = maploader.load("PNC1.tmx");
+        //map = maploader.load("PNCtest.tmx"); //TEST
         renderer = new OrthogonalTiledMapRenderer(map);
         
-        numOfStages = ((map.getProperties().get("tilewidth", Integer.class)) * 2) / game.V_WIDTH;
+        //numOfStages = ((map.getProperties().get("tilewidth", Integer.class)) * 2) / game.V_WIDTH;
+        numOfStages = ((map.getProperties().get("tilewidth", Integer.class))) / game.V_WIDTH; //Test
         stages = new float[numOfStages];
         stages[0] = game.V_WIDTH / 2; //First stage's cam position is at game.V_WIDTH / 2 (400px)
         currentStage = 0;
         
         restrictionPoint = 4;
+        //restrictionPoint = 9; //TEST
         
         for (int i =  1; i < numOfStages; i++) {
             stages[i] = stages[i-1] + game.V_WIDTH;
@@ -141,6 +145,13 @@ public class PointAndClick implements Screen {
         /*atlas = ;
         physicDebug = ;
         music = ;*/
+       int x = 0;
+       for (InGameObject o: gameObjects) {
+           currentMessage += "Object " + x + ": " + o.getName() + " | Coor.: " + o.getX() + "," + o.getY() + " | "+ o.getShape().getClass().getTypeName() + "\n";
+           x++;
+       }
+       
+       test = gameObjects.get(1);
     }
     
     //public Atlas getAtlas() {}
@@ -156,7 +167,14 @@ public class PointAndClick implements Screen {
     
     public void clickHandler() {
         if (Gdx.input.justTouched()) {
-            
+            for (int i = 0; i < gameObjects.size; i++) {
+                if (gameObjects.get(i).getShape().contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    currentMessage = gameObjects.get(i).getText();
+                }
+            }
+            /*if (gameObjects.peek().getShape().contains(Gdx.input.getX(), Gdx.input.getY())) {
+                currentMessage = gameObjects.peek().getText();
+            }*/
         }
     }
     
@@ -189,12 +207,7 @@ public class PointAndClick implements Screen {
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
-            if (!update) {
-                update = true;
-            } else {
-            update = false;
-            }
-            
+            currentMessage = "";
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
@@ -214,9 +227,7 @@ public class PointAndClick implements Screen {
     public void update(float deltaTime) {
         handleInput(deltaTime);
         renderer.setView(cam);
-        if (update) {
         cam.update();
-        }
         //currentMessage = "Position: " + cam.position.x;
         //renderer.setView(cam);
     }
@@ -230,23 +241,26 @@ public class PointAndClick implements Screen {
     public void render(float deltaTime) {
         update(deltaTime);
         Gdx.gl.glClearColor(0, 0, 0, 1);
+        //Gdx.gl.glClearColor(1, 0, 0, 1); //RED
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         renderer.render();
-        //currentMessage = "" + renderer.getViewBounds().x; DEBUG
+        //currentMessage = "" + renderer.getViewBounds().x + "\n" + currentStage + "\n" + cam.position.x; //DEBUG
         
         game.batch.setProjectionMatrix(cam.combined);     
         
         game.batch.begin();
         //everything rendered to screen goes here
         font.draw(game.batch, currentMessage, textPos, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 10, true);
-        //font.draw(game.batch, currentMessage, 0, 75, 400, 10, true);
+        font.draw(game.batch, "Mouse: " + Gdx.input.getX() + ", " + Gdx.input.getY(), textPos, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 10, true);
         game.batch.end();
         
-        /*messageBox.begin(ShapeType.Line);
-        messageBox.rect(0, 0, 400, 150);
+        messageBox.begin(ShapeType.Line);
+        //messageBox.rect(0, 0, 400, 150);
+        //messageBox.polyline(gameObjects.get(0).getPolyline().getVertices());
+        messageBox.ellipse(test.getX(), 800 - test.getY(), test.getEllipse().circumference() / 3.14f, test.getEllipse().circumference() / 3.14f);
         messageBox.setColor(Color.BLUE);
-        messageBox.end();*/
+        messageBox.end();
     }
 
     @Override

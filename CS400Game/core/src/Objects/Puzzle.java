@@ -19,10 +19,7 @@ public abstract class Puzzle {
     private float[] variables;
     private float formula;
 
-    /*public Puzzle() {
-    }*/
-
-    public Puzzle(PointAndClick screen) {}
+    public Puzzle() {}
     
     public void checkAnswer() {}
     

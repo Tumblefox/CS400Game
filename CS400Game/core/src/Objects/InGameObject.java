@@ -10,9 +10,13 @@ import Screens.PointAndClick;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.objects.PolylineMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -29,6 +33,7 @@ public class InGameObject {
     private Rectangle rectBounds;
     private Polyline polyBounds;
     private Ellipse ellipseBounds;
+    private float x, y;
     //private Body body;
     private Screen screen;
     private MapObject object;
@@ -46,15 +51,30 @@ public class InGameObject {
         showInteraction = false;
 
         
-        if (object.getProperties().get("type", String.class).equals("rectangle")) {
-            rectBounds = object.getProperties().get("rectangle", Rectangle.class);
+        if (object instanceof RectangleMapObject) {
+            rectBounds = ((RectangleMapObject) object).getRectangle();
+            x = rectBounds.x;
+            rectBounds.y = 800 - rectBounds.y;
+            y = rectBounds.y;
         }
-        if (object.getProperties().get("type", String.class).equals("ellipse")) {
+        else if (object instanceof EllipseMapObject) {
+            ellipseBounds = ((EllipseMapObject) object).getEllipse();
+            x = ellipseBounds.x;
+            ellipseBounds.y = 800 - ellipseBounds.y;
+            y = ellipseBounds.y;
+        }
+        else {
+            polyBounds = ((PolylineMapObject) object).getPolyline();
+            x = polyBounds.getX();
+            polyBounds.setPosition(x, 800 - polyBounds.getY());
+            y = polyBounds.getY();
+        }
+        /*if (object.getProperties().get("type", String.class).equals("ellipse")) {
             ellipseBounds = object.getProperties().get("ellipse", Ellipse.class);
         }
         if (object.getProperties().get("type", String.class).equals("polyline")) {
-            polyBounds = object.getProperties().get("ellipse", Polyline.class);
-        }
+            polyBounds = object.getProperties().get("polyline", Polyline.class);
+        }*/
     }
     
     public String getName() {
@@ -78,6 +98,26 @@ public class InGameObject {
     
     public Polyline getPolyline() {
         return polyBounds;
+    }
+    
+    public float getX() {
+        return x;
+    }
+    
+    public float getY() {
+        return y;
+    }
+    
+    public Shape2D getShape() {
+        if (object instanceof RectangleMapObject) {
+            return rectBounds;
+        }
+        else if (object instanceof EllipseMapObject) {
+            return ellipseBounds;
+        }
+        else {
+            return polyBounds;
+        } 
     }
     
     public void showInteraction() {
