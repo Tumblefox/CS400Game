@@ -1,4 +1,4 @@
-# Last Asylum User Manual
+# Lost Asylum User Manual
 
 By Aaron Andries, A'Jee Sieka, and Robert Settles
 
